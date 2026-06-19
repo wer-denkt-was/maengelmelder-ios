@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Geometry" representedClassName="GeometryMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="max_lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="max_long" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="min_lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="min_long" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="part_id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="part_wkt" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Report" representedClassName="ReportMO" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="attachments" optional="YES" attributeType="Transformable"/>
+        <attribute name="created" optional="YES" attributeType="String"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="domainid" optional="YES" attributeType="Integer 32" defaultValueString="32" usesScalarValueType="YES"/>
+        <attribute name="domainName" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isLocal" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isOffline" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isPrivate" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastSeen" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="long" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="marker_color" optional="YES" attributeType="String"/>
+        <attribute name="marker_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="number" optional="YES" attributeType="String"/>
+        <attribute name="pictureURL" optional="YES" attributeType="String"/>
+        <attribute name="state" optional="YES" attributeType="String"/>
+        <attribute name="state_german" optional="YES" attributeType="String"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="typeName" optional="YES" attributeType="String"/>
+        <relationship name="attribute_values" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="ReportTypeAttribute"/>
+        <relationship name="history" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ReportComment"/>
+        <relationship name="reportType" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ReportType"/>
+        <relationship name="responsible" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ReportUser"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ReportComment" representedClassName="ReportCommentMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ReportType" representedClassName="ReportTypeMO" syncable="YES">
+        <attribute name="attributeids_message" optional="YES" attributeType="Transformable"/>
+        <attribute name="attributeids_update" optional="YES" attributeType="Transformable"/>
+        <attribute name="domainID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="domainTitle" optional="YES" attributeType="String"/>
+        <attribute name="explanation" optional="YES" attributeType="String"/>
+        <attribute name="externalUri" optional="YES" attributeType="String"/>
+        <attribute name="geometry_ids" optional="YES" attributeType="Transformable"/>
+        <attribute name="group" optional="YES" attributeType="String"/>
+        <attribute name="has_title" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="is_private" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="marker_class" optional="YES" attributeType="String"/>
+        <attribute name="marker_id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="ordering" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="position" optional="YES" attributeType="String"/>
+        <attribute name="req_photo" optional="YES" attributeType="String"/>
+        <attribute name="rt_description" optional="YES" attributeType="String"/>
+        <attribute name="rubric" optional="YES" attributeType="String"/>
+        <relationship name="typeAttributes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ReportTypeAttribute"/>
+    </entity>
+    <entity name="ReportTypeAttribute" representedClassName="ReportTypeAttributeMO" syncable="YES">
+        <attribute name="answer" optional="YES" attributeType="String"/>
+        <attribute name="cached" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="default_value" optional="YES" attributeType="String"/>
+        <attribute name="error" optional="YES" attributeType="String"/>
+        <attribute name="group" optional="YES" attributeType="String"/>
+        <attribute name="help" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="is_public" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="max_length" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="multiselect" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="ordering" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="regex" optional="YES" attributeType="String"/>
+        <attribute name="relation_data" optional="YES" attributeType="String"/>
+        <attribute name="required" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="required_admin" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="required_if_code" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="required_if_value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="values" optional="YES" attributeType="Transformable"/>
+        <attribute name="visible_if_code" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="visible_if_value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="visible_to" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ReportUser" representedClassName="ReportUserMO" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="public_name" optional="YES" attributeType="String"/>
+    </entity>
+</model>
