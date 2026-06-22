@@ -129,9 +129,13 @@ class MyMessagesViewModel: NSObject, UITableViewDataSource {
             MMApi.shared.getMessagesForList(checkNumber: nil, owner: UserDefaults.standard.string(forKey: "user.id"), page: 1, system: system) { reports, error in
                 for report in reports ?? [] {
                     if GlobalArrays.MODE_IDEA_CATEGORIES.contains(report.reportType?.id?.intValue ?? 0) {
-                        self.uploadedIdeas.append(report)
+                        if !self.uploadedIdeas.contains(where: { $0.id == report.id }) {
+                            self.uploadedIdeas.append(report)
+                        }
                     } else {
-                        self.uploadedMaengel.append(report)
+                        if !self.uploadedMaengel.contains(where: { $0.id == report.id }) {
+                            self.uploadedMaengel.append(report)
+                        }
                     }
                 }
                 self.tableView?.reloadSections([1], with: .automatic)

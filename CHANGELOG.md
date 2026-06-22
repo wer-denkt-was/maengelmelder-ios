@@ -1,3 +1,6 @@
+[1.7.21]
+- fixed own reports being displayed twice in "Meine Meldungen"
+
 [1.7.20]
 - first public release on GitHub
 
