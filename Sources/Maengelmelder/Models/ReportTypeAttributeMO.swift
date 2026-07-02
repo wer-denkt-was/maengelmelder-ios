@@ -206,6 +206,6 @@ public class ReportTypeAttributeMO: NSManagedObject {
             }
         }
         
-        return ReportAttributesDisplayableObject(name: name!, id: id!, typ: type!, code: code!, height: height, pHolder: help ?? "", sortOrder: ordering, required: self.required == 1, answer: answer!, vals:  Array(values) as! [String], multiselect: self.multiselect == 1, maxLength: self.max_length ?? 0)
+        return ReportAttributesDisplayableObject(name: name!, id: id!, typ: type!, code: code!, height: height, pHolder: help ?? "", sortOrder: ordering, required: self.required == 1, answer: answer ?? "", vals:  Array(values) as! [String], multiselect: self.multiselect == 1, maxLength: self.max_length ?? 0)
     }
 }

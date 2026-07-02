@@ -1,3 +1,6 @@
+[1.7.22]
+- fix npe with specific categories
+
 [1.7.21]
 - fixed own reports being displayed twice in "Meine Meldungen"
 
