@@ -1,3 +1,6 @@
+[1.8.0]
+- iOS 26 Liquid Glass adaptations
+
 [1.7.22]
 - fix npe with specific categories
 

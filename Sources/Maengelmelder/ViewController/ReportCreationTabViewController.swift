@@ -100,7 +100,12 @@ public class ReportCreationTabViewController : UITabBarController {
         button.transform = CGAffineTransform(scaleX: -1, y: 1)
         button.titleLabel?.transform = CGAffineTransform(scaleX: -1, y: 1)
         button.imageView?.transform = CGAffineTransform(scaleX: -1, y: -1)
-        button.setTitleColor(MMColorScheme.shared.getColor(view: button, type: .titleText), for: .normal)
+        if #available(iOS 26, *) {
+            button.setTitleColor(.label, for: .normal)
+            button.tintColor = .label
+        } else {
+            button.setTitleColor(MMColorScheme.shared.getColor(view: button, type: .titleText), for: .normal)
+        }
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
         if (screenMode! == GlobalFlagValues.REPORT_SCREEN_NEW_MODE && !inserted) {

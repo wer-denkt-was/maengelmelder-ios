@@ -12,7 +12,6 @@ import WebKit
 class WebViewController: UIViewController, WKNavigationDelegate {
 
     @IBOutlet weak var webView: WKWebView!		
-    @IBOutlet weak var viewForX: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var overrideInfoPage : InfoPage?
@@ -23,7 +22,6 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.viewForX.backgroundColor = MMColorScheme.shared.getColor(view: self.view, type: .appTheme)
         self.webView.navigationDelegate = self		
         self.webView.isOpaque = false
         

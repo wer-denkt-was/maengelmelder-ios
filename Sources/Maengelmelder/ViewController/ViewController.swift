@@ -45,7 +45,7 @@ class ViewController: UIViewController, MapManagerDelegate {
     @IBOutlet weak var calloutView: UIView!
     @IBOutlet weak var calloutTitle: UILabel!
     @IBOutlet weak var calloutSubtitle: UILabel!
-    @IBOutlet weak var calloutButton: UIButton!    
+    @IBOutlet weak var calloutButton: UIButton!
     
     @IBOutlet weak var ideaContainer: UIView!
     @IBOutlet weak var mangleCard: UIView!
@@ -126,7 +126,8 @@ class ViewController: UIViewController, MapManagerDelegate {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItems = []
-        
+        navigationItem.backButtonDisplayMode = .minimal
+
         MMCoreDataManager.cleanDBofOldReports(moc: MMCoreDataManager.shared.context)
         viewModel = ViewModel(delegate: self)
           
@@ -149,7 +150,7 @@ class ViewController: UIViewController, MapManagerDelegate {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -244,7 +245,11 @@ class ViewController: UIViewController, MapManagerDelegate {
 
     fileprivate func setTopNavBarAccessories() {
         self.menuBarButton = UIBarButtonItem(image: UIImage(named: "hamburger_menu", in: MM.shared.bundle, compatibleWith: nil), landscapeImagePhone: nil, style: .plain, target: self, action: #selector(self.hamburgerMenuButtonAction(button:)))
-        self.menuBarButton?.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+        if #available(iOS 26, *) {
+            self.menuBarButton?.tintColor = .label
+        } else {
+            self.menuBarButton?.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+        }
         navigationItem.leftBarButtonItem = menuBarButton
         
         if !(navigationItem.rightBarButtonItems ?? []).contains(where: { button in
@@ -259,7 +264,11 @@ class ViewController: UIViewController, MapManagerDelegate {
             return button.tag == LAYER_BUTTON_TAG
         }) {
             let rightBarButton = UIBarButtonItem(image: UIImage(named: "ic_layer", in: MM.shared.bundle, compatibleWith: nil), style: .plain, target: self, action: #selector(self.showLayerAlert))
-            rightBarButton.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+            if #available(iOS 26, *) {
+                rightBarButton.tintColor = .label
+            } else {
+                rightBarButton.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+            }
             rightBarButton.tag = LAYER_BUTTON_TAG
             navigationItem.rightBarButtonItems?.append(rightBarButton)
         }
@@ -322,27 +331,43 @@ class ViewController: UIViewController, MapManagerDelegate {
     }
     
     fileprivate func setTopNavBarStyle() {
-        navigationController?.navigationBar.barTintColor = MMColorScheme.shared.getColor(view: self.view, type: .barTint)
-        navigationController?.navigationBar.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
-        navigationController?.navigationBar.backgroundColor = MMColorScheme.shared.getColor(view: self.view, type: .barTint)
-        
-        let styleAttrs = [
-            NSAttributedString.Key.foregroundColor: MMColorScheme.shared.getColor(view: self.view, type: .titleText),
-            NSAttributedString.Key.font: MMFontScheme.shared.titleTextFont!
-            ] as [NSAttributedString.Key : Any]
-        
-        navigationController?.navigationBar.titleTextAttributes = styleAttrs
-        
+        if #available(iOS 26, *) {
+            // On iOS 26+ Liquid Glass manages the bar background — forcing barTintColor/backgroundColor
+            // breaks the glass effect. Mark the bar as translucent so UIKit extends the content view
+            // to y=0 (behind the nav bar), revealing the map through the glass.
+            navigationController?.navigationBar.isTranslucent = true
+            navigationController?.navigationBar.tintColor = .label
+        } else {
+            navigationController?.navigationBar.barTintColor = MMColorScheme.shared.getColor(view: self.view, type: .barTint)
+            navigationController?.navigationBar.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+            navigationController?.navigationBar.backgroundColor = MMColorScheme.shared.getColor(view: self.view, type: .barTint)
+
+            let styleAttrs = [
+                NSAttributedString.Key.foregroundColor: MMColorScheme.shared.getColor(view: self.view, type: .titleText),
+                NSAttributedString.Key.font: MMFontScheme.shared.titleTextFont!
+                ] as [NSAttributedString.Key : Any]
+
+            navigationController?.navigationBar.titleTextAttributes = styleAttrs
+        }
+
         titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: 0, height: 0))
         titleLabel?.backgroundColor = .clear
-        titleLabel?.textColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+        if #available(iOS 26, *) {
+            titleLabel?.textColor = .label
+        } else {
+            titleLabel?.textColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+        }
         titleLabel?.font = MMFontScheme.shared.titleTextFont?.withSize(17)
         titleLabel?.text = MMSettings.shared.APP_TITLE
         titleLabel?.sizeToFit()
-        
+
         self.subtitleLabel = UILabel(frame: CGRect(x: 0, y: 18, width: 0, height: 0))
         self.subtitleLabel?.backgroundColor = .clear
-        self.subtitleLabel?.textColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+        if #available(iOS 26, *) {
+            self.subtitleLabel?.textColor = .label
+        } else {
+            self.subtitleLabel?.textColor = MMColorScheme.shared.getColor(view: self.view, type: .titleText)
+        }
         self.subtitleLabel?.font = MMFontScheme.shared.titleTextFont?.withSize(12)
         self.subtitleLabel?.sizeToFit()
         
@@ -564,6 +589,9 @@ class ViewController: UIViewController, MapManagerDelegate {
             if !MMSettings.shared.isIdeaModuleActivated {
                 self.checkShowCase()
             }
+        }
+        if #available(iOS 26, *) {
+            self.mapView.isHidden = !self.termsView.isHidden
         }
     }
     

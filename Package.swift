@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
             .package(url: "https://github.com/JonasGessner/JGProgressHUD", from: "2.2.0"),
             .package(url: "https://github.com/Alamofire/AlamofireImage", from: "4.3.0"),
-            .package(url: "https://github.com/aromajoin/material-showcase-ios", from: "0.8.0"),
+            .package(url: "https://github.com/FBessler/material-showcase-ios", from: "0.8.2"),
             .package(url: "https://github.com/Marxon13/M13Checkbox.git", from: "3.4.1"),
             .package(url: "https://github.com/jonkykong/SideMenu.git", from: "6.5.0"),
             .package(url: "https://github.com/Timetoast-22/FSPagerView", from: "0.9.0"),

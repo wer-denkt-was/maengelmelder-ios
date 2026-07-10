@@ -76,6 +76,8 @@ class ReportPositionViewController: UIViewController {
             self.mapManager?.addMarkerToMap(marker: marker)
         }
         
+        self.view.backgroundColor = MMColorScheme.shared.getColor(isDark: self.view.isDarkMode(), type: .barTint)
+        
         self.crosshairView.image = UIImage(named: "crosshair", in: MM.shared.bundle, compatibleWith: nil)
         self.crosshairView.tintColor = self.crosshairView.isDarkMode() ? .white : .black
         

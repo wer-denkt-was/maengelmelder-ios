@@ -301,11 +301,21 @@ extension ReportAdditionalAttributesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UITableViewHeaderFooterView()
+        headerView.textLabel?.isHidden = true
         let label = PaddingLabel()
         label.numberOfLines = 0
         label.font = MMFontScheme.shared.titleTextFont?.withSize(headerFontSize)
         label.text = reportAttributesDS?.tableView(tableView, titleForHeaderInSection: section)
-        label.backgroundColor =  tableView.isDarkMode() ? .black : .white
-        return label
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        headerView.contentView.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: headerView.contentView.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: headerView.contentView.trailingAnchor),
+            label.topAnchor.constraint(equalTo: headerView.contentView.topAnchor),
+            label.bottomAnchor.constraint(equalTo: headerView.contentView.bottomAnchor)
+        ])
+        return headerView
     }
 }
