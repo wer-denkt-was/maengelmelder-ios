@@ -260,6 +260,7 @@ extension ReportTypeViewController : CustomTypeDelegate {
     
     func saveButton() {
         self.viewModel?.openFuss = false
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

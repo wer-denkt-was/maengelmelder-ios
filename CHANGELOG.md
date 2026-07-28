@@ -1,3 +1,6 @@
+[1.8.1]
+- fix missing pop after saveButton in CustomTypeViewController
+
 [1.8.0]
 - iOS 26 Liquid Glass adaptations
 
