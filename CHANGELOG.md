@@ -1,3 +1,6 @@
+[1.8.2]
+- navigate to previous tab after saveButton in CustomTypeViewController
+
 [1.8.1]
 - fix missing pop after saveButton in CustomTypeViewController
 
