@@ -68,6 +68,8 @@ class ReportAdditionalAttributesViewController : UIViewController {
         
         pickerView.dataSource = viewModel
         pickerView.delegate = viewModel
+
+        multiPickerView.font = MMFontScheme.shared.normalTextFont ?? UIFont.systemFont(ofSize: 21)
     }
     
     override func viewWillAppear(_ animated: Bool) {

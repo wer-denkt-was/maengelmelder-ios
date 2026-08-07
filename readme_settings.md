@@ -90,6 +90,10 @@ All settings are accessed via `MMSettings.shared`, e.g. `MMSettings.shared.APP_I
 | loadDomainBeforeReports | Bool | false | Whether the domain is required before loading reports. |
 | showWelcomeOnFirstStart | Bool | true | If true, the welcome page is shown on first start. |
 | parentNavigationController | UINavigationController? | nil | If the Mängelmelder module is embedded in another `UINavigationController`, it can be passed here so that it is used for navigation instead of the internal one. |
+| customFontRegular | String? | nil | PostScript name of the regular font. When set, applies to all text slots. Use `MM.registerFont(url:)` to register the font file first. |
+| customFontBold | String? | nil | PostScript name of the bold font (titles, subtitles). Falls back to `customFontRegular` if not set. |
+| customFontMedium | String? | nil | PostScript name of the medium font (buttons). Falls back to `customFontRegular` if not set. |
+| customFontLight | String? | nil | PostScript name of the light font (small text). Falls back to `customFontRegular` if not set. |
 | customTypeSelectionStoryboard | UIStoryboard? | nil | Custom storyboard for type selection. |
 | customMyMessagesController | UIViewController? | nil | Custom view controller for "my messages". |
 | showMapTypeButtonOnMainMap | Bool | false | Show a map type button on the main map to switch between satellite and street view. |

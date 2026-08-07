@@ -162,4 +162,29 @@ public class MMSettings {
     public var showAppIconOnWebViewNavigationBar: Bool = false
     /** The method to validate qr codes when scanned via the app */
     public var validateQRCode: (String) -> Bool = { _ in return false }
+
+    //MARK: Font Settings
+    /** PostScript name of the regular font. When set, applies to all text slots. */
+    public var customFontRegular: String? = nil { didSet { applyCustomFonts() } }
+    /** PostScript name of the bold font (titles, subtitles). Falls back to customFontRegular if not set. */
+    public var customFontBold: String? = nil    { didSet { applyCustomFonts() } }
+    /** PostScript name of the medium font (buttons). Falls back to customFontRegular if not set. */
+    public var customFontMedium: String? = nil  { didSet { applyCustomFonts() } }
+    /** PostScript name of the light font (small text). Falls back to customFontRegular if not set. */
+    public var customFontLight: String? = nil   { didSet { applyCustomFonts() } }
+
+    private func applyCustomFonts() {
+        guard let regular = customFontRegular else { return }
+        let bodySize = UIFont.preferredFont(forTextStyle: .body).pointSize
+        let footnoteSize = UIFont.preferredFont(forTextStyle: .footnote).pointSize
+        let boldName   = customFontBold   ?? regular
+        let mediumName = customFontMedium ?? regular
+        let lightName  = customFontLight  ?? regular
+
+        if let f = UIFont(name: regular,    size: bodySize)    { MMFontScheme.shared.normalTextFont    = f }
+        if let f = UIFont(name: boldName,   size: bodySize)    { MMFontScheme.shared.titleTextFont     = f
+                                                                 MMFontScheme.shared.subTitleTextFont  = f }
+        if let f = UIFont(name: mediumName, size: bodySize)    { MMFontScheme.shared.buttonTitleFont   = f }
+        if let f = UIFont(name: lightName,  size: footnoteSize){ MMFontScheme.shared.smallTextFont     = f }
+    }
 }

@@ -1,3 +1,6 @@
+[1.8.3]
+- added support for custom fonts via MMSettings and MM.registerFont
+
 [1.8.2]
 - navigate to previous tab after saveButton in CustomTypeViewController
 

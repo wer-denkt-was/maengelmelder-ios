@@ -44,8 +44,8 @@
                                 <rect key="frame" x="0.0" y="618" width="414" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tWp-Mb-8ua">
-                                        <rect key="frame" x="302" y="0.0" width="92" height="44"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <rect key="frame" x="282" y="0.0" width="112" height="44"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Neue Meldung">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -54,12 +54,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kcc-WQ-hNh">
-                                        <rect key="frame" x="203" y="0.0" width="89" height="44"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                        <rect key="frame" x="164" y="0.0" width="108" height="44"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" title="Sammelcheck"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jq2-iX-K51">
-                                        <rect key="frame" x="248" y="0.0" width="44" height="44"/>
+                                        <rect key="frame" x="228" y="0.0" width="44" height="44"/>
                                         <accessibility key="accessibilityConfiguration" label="Scanne einen QR-Code"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="0g2-ub-gDg"/>
@@ -343,7 +343,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcI-bu-7xB">
                                         <rect key="frame" x="15" y="5" width="333.33333333333331" height="30"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -473,15 +473,15 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="45"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Straße, Hausnummer und Ort eingeben" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tbq-Am-RMG">
-                                        <rect key="frame" x="5" y="5" width="301" height="35"/>
+                                        <rect key="frame" x="5" y="5" width="295.33333333333331" height="35"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e6n-ni-Fqj">
-                                        <rect key="frame" x="311" y="0.0" width="103" height="45"/>
+                                        <rect key="frame" x="305.33333333333331" y="0.0" width="108.66666666666669" height="45"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Ort suchen">
-                                            <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleBody"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="searchAdressButtonAction:" destination="pQE-FX-646" eventType="touchUpInside" id="DKQ-nM-wfG"/>
@@ -1905,14 +1905,14 @@ Oberkategorie:</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vJC-iq-plD">
-                                                    <rect key="frame" x="-44" y="15" width="50" height="50"/>
+                                                    <rect key="frame" x="16" y="15" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="QGy-4g-uPs"/>
                                                         <constraint firstAttribute="height" constant="50" id="RdT-QT-5kq"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="glU-XK-jqA">
-                                                    <rect key="frame" x="16" y="15" width="50" height="50"/>
+                                                    <rect key="frame" x="76" y="15" width="50" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1957,13 +1957,13 @@ Oberkategorie:</string>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71y-Gb-oJO" userLabel="Infotext Label">
                                 <rect key="frame" x="10" y="696" width="399" height="0.0"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0AA-Dt-Y2s">
                                 <rect key="frame" x="409" y="721" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -2227,7 +2227,7 @@ Oberkategorie:</string>
             <objects>
                 <viewController id="2Il-16-wPv" customClass="FilterViewController" customModule="Maengelmelder" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GZn-dS-Iej">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="726"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="662"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ety-sf-0bh">
@@ -2632,38 +2632,38 @@ Oberkategorie:</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="reportCell" id="swK-r5-fEz" customClass="ReportTableViewCell" customModule="Maengelmelder">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="76.333335876464844"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="77.333335876464844"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="swK-r5-fEz" id="oZY-ks-M6H">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="76.333335876464844"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="77.333335876464844"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XM0-OE-g2e">
-                                                    <rect key="frame" x="5" y="5" width="51.333333333333336" height="66.333333333333329"/>
+                                                    <rect key="frame" x="5" y="5" width="52" height="67.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="XM0-OE-g2e" secondAttribute="height" multiplier="24:31" id="Dxi-J6-gyB"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kCY-az-tax">
-                                                    <rect key="frame" x="61.333333333333343" y="14.999999999999998" width="347.66666666666663" height="21.333333333333329"/>
+                                                    <rect key="frame" x="62" y="14.999999999999998" width="347" height="22.333333333333329"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U5m-ZM-Smc">
-                                                    <rect key="frame" x="61.333333333333343" y="36.333333333333336" width="39.666666666666657" height="19.333333333333336"/>
+                                                    <rect key="frame" x="62" y="37.333333333333336" width="39.666666666666657" height="19.333333333333336"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2xd-75-G7t">
-                                                    <rect key="frame" x="61.333333333333343" y="55.666666666666664" width="33" height="15.666666666666664"/>
+                                                    <rect key="frame" x="62" y="56.666666666666664" width="33" height="15.666666666666664"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="ybo-1g-mfL">
-                                                    <rect key="frame" x="362" y="36.333333333333336" width="36" height="40.000000000000007"/>
+                                                    <rect key="frame" x="362" y="37.333333333333336" width="36" height="40.000000000000007"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
@@ -3179,7 +3179,7 @@ Oberkategorie:</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="0yr-wi-Nkc"/>
+        <segue reference="Ksn-36-bX9"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add_photo" width="39.666667938232422" height="32"/>
@@ -3218,7 +3218,7 @@ Oberkategorie:</string>
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.21960784310000001" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

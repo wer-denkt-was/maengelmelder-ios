@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import CoreLocation
+import CoreText
 
 public class MM {
     
@@ -34,6 +35,20 @@ public class MM {
         return vc
     }
     
+    /**
+     Registers a font file from the given URL so it can be used by name in MMFontScheme / MMSettings.
+     Call this before setting customFontRegular and related properties.
+     */
+    @discardableResult
+    public static func registerFont(url: URL) -> Bool {
+        var error: Unmanaged<CFError>?
+        let success = CTFontManagerRegisterFontsForURL(url as CFURL, .process, &error)
+        if let err = error?.takeRetainedValue() {
+            print("MM: Failed to register font at \(url): \(err)")
+        }
+        return success
+    }
+
     /**
      Delete all locally saved data.
      */
