@@ -90,7 +90,10 @@ class ReportListViewModel: NSObject, UITableViewDataSource {
         let report = self.filterdReports[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "reportCell") as! ReportTableViewCell
         cell.idLabel.text = String.init(format: LocalizedString("MESSAGE_DETAIL_PAGE_TITLE", comment: ""), report.id.intValue)
-        
+        cell.titleLabel.font = MMFontScheme.shared.normalTextFont
+        cell.subtitleLabel.font = MMFontScheme.shared.smallTextFont
+        cell.idLabel.font = MMFontScheme.shared.smallTextFont
+
         var name = report.typeName ?? ""
         if var index = name.firstIndex(of: ">") {
             if String(name[index...]).starts(with: " ") {

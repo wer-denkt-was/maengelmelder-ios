@@ -57,10 +57,12 @@ public class ReportDetailViewController: UIViewController {
         self.commentButton.backgroundColor = MMColorScheme.shared.getColor(view: commentButton, type: .buttonBg)
         self.commentButton.setTitleColor(MMColorScheme.shared.getColor(view: commentButton, type: .buttonTitleText), for: .normal)
         self.commentButton.setTitle(LocalizedString("COMMENT_BUTTON_TITLE", comment: ""), for: .normal)
+        self.commentButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         self.commentButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(commentButtonAction)))
-        
+
         self.subscribeButton.backgroundColor = MMColorScheme.shared.getColor(view: commentButton, type: .buttonBg)
         self.subscribeButton.setTitleColor(MMColorScheme.shared.getColor(view: commentButton, type: .buttonTitleText), for: .normal)
+        self.subscribeButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         
         if MMSettings.shared.subscribeReportTyp == .API {
             self.subscribeButton.setTitle(LocalizedString("SUBSCRIBE_BUTTON_TITLE", comment: ""), for: .normal)

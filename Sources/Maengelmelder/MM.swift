@@ -18,9 +18,11 @@ public class MM {
 
     var dbName: String = ""
     var errorHandler: (Error) -> Void = {_ in }
-    
+
     public let bundle = Bundle.module
-    
+
+    weak var moduleNavigationController: UINavigationController?
+
     /**
      Returns the ViewController to start the Module.
      */
@@ -28,11 +30,45 @@ public class MM {
         UserDefaults.standard.removeObject(forKey: "user_filter")
         UserDefaults.standard.removeObject(forKey: "fuss_list_page")
         UserDefaults.standard.removeObject(forKey: "fuss_filter_checknumber")
-        
+
         let s = UIStoryboard(name: "MMMain", bundle: bundle)
         let vc = s.instantiateInitialViewController() as? UINavigationController
         (vc?.viewControllers.first as? ViewController)?.openUrl = url
+        moduleNavigationController = vc
+        applyNavBarFont()
         return vc
+    }
+
+    func applyNavBarFont() {
+        guard let navBar = moduleNavigationController?.navigationBar else { return }
+        let scheme = MMFontScheme.shared
+        let titleFont = scheme.titleTextFont ?? scheme.normalTextFont
+        let buttonFont = scheme.buttonTitleFont ?? scheme.normalTextFont
+
+        if let titleFont = titleFont {
+            var titleAttrs = navBar.titleTextAttributes ?? [:]
+            titleAttrs[.font] = titleFont
+            navBar.titleTextAttributes = titleAttrs
+
+            var largeTitleAttrs = navBar.largeTitleTextAttributes ?? [:]
+            largeTitleAttrs[.font] = titleFont
+            navBar.largeTitleTextAttributes = largeTitleAttrs
+        }
+
+        if let buttonFont = buttonFont {
+            let buttonAttrs: [NSAttributedString.Key: Any] = [.font: buttonFont]
+            let appearance = navBar.standardAppearance.copy() as! UINavigationBarAppearance
+            if let titleFont = titleFont {
+                appearance.titleTextAttributes[.font] = titleFont
+            }
+            appearance.buttonAppearance.normal.titleTextAttributes = buttonAttrs
+            appearance.buttonAppearance.highlighted.titleTextAttributes = buttonAttrs
+            appearance.doneButtonAppearance.normal.titleTextAttributes = buttonAttrs
+            appearance.doneButtonAppearance.highlighted.titleTextAttributes = buttonAttrs
+            navBar.standardAppearance = appearance
+            navBar.scrollEdgeAppearance = appearance
+            navBar.compactAppearance = appearance
+        }
     }
     
     /**

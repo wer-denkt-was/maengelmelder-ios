@@ -474,6 +474,7 @@ class ReportTypeViewModel : NSObject, UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReportTypeCell") as! ReportTypeTableViewCell
+        cell.setStyle()
         cell.explanationButton.tintColor = MMColorScheme.shared.getColor(view: cell, type: .tableViewCellText)
         var type : ReportTypeMO?
         var group : String?

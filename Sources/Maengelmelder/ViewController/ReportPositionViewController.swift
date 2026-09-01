@@ -86,6 +86,7 @@ class ReportPositionViewController: UIViewController {
         self.searchAdressContainer.backgroundColor = MMColorScheme.shared.getColor(isDark: self.searchAdressContainer.isDarkMode(), type: .barTint)
         self.searchAdressButton.backgroundColor = MMColorScheme.shared.getColor(isDark: self.searchAdressButton.isDarkMode(), type: .buttonBg)
         self.searchAdressButton.setTitleColor(MMColorScheme.shared.getColor(isDark: self.searchAdressButton.isDarkMode(), type: .buttonTitleText), for: .normal)
+        self.searchAdressButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         self.searchAdressField.returnKeyType = .search
         self.searchAdressField.delegate = self
         
@@ -118,6 +119,7 @@ class ReportPositionViewController: UIViewController {
         
         self.updatePositionButton.backgroundColor = MMColorScheme.shared.getColor(view: updatePositionButton, type: .buttonBg)
         self.updatePositionButton.setTitleColor(MMColorScheme.shared.getColor(view: updatePositionButton, type: .buttonTitleText), for: .normal)
+        self.updatePositionButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         
         self.myLocationButton.backgroundColor = MMColorScheme.shared.getColor(view: myLocationButton, type: .buttonBg)
         self.myLocationButton.tintColor = MMColorScheme.shared.getColor(view: myLocationButton, type: .buttonTitleText)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LabelWithURLTouch: UILabel {
+class LabelWithURLTouch: MMLabel {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let url = self.url(at: touches) {

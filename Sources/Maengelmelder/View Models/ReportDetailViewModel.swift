@@ -126,6 +126,7 @@ class ReportDetailViewModel: NSObject, UICollectionViewDataSource, UICollectionV
             
             let item = report?.details[(indexPath.row-offset)]
             cell.titleLabel.text = item?.title
+            cell.titleLabel.font = MMFontScheme.shared.titleTextFont?.withSize(cell.titleLabel.font.pointSize)
             DispatchQueue.main.async {
                 cell.textLabel.attributedText = self.report?.getDetailValueString(for: indexPath.row-offset, and: cell.isDarkMode())
             }
@@ -146,7 +147,7 @@ class ReportDetailViewModel: NSObject, UICollectionViewDataSource, UICollectionV
                 offset -= 1
             }
             let index = (indexPath.row-offset)
-            let first = NSAttributedString(string: report?.details[index].title ?? "", attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .title3)])
+            let first = NSAttributedString(string: report?.details[index].title ?? "", attributes: [NSAttributedString.Key.font: MMFontScheme.shared.titleTextFont ?? UIFont.preferredFont(forTextStyle: .title3)])
             let second = report?.getDetailValueString(for: index, and: collectionView.isDarkMode()) ?? NSAttributedString()
             let size = first.boundingRect(with: CGSize(width: width-10, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
             let size2 = second.boundingRect(with: CGSize(width: width-10, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)

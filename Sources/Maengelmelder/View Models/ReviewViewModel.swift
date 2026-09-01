@@ -132,6 +132,7 @@ class ReviewViewModel: NSObject, UICollectionViewDataSource, UICollectionViewDel
         } else if (indexPath.row == 1 && !showMap) || (indexPath.row == 2 && showMap) {
             let report = viewsParentController.report
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "category_cell", for: indexPath) as! ReviewCategoryCollectionViewCell
+            cell.applyFonts()
             cell.headerLabel.text = LocalizedString("HEADING_STEP_3", comment: "")
             cell.editAccessor.image = UIImage(named: "ic_edit", in: MM.shared.bundle, compatibleWith: nil)
             cell.editAccessor.tintColor = .lightGray
@@ -152,6 +153,7 @@ class ReviewViewModel: NSObject, UICollectionViewDataSource, UICollectionViewDel
             return cell
         } else if ((indexPath.row == 3 && showMap) || (indexPath.row == 2 && !showMap)) && ((viewsParentController.report?.reportType?.has_title ?? 0) == 1) && ((viewsParentController.domain?.getAttributesAsDefaultFields() ?? 0) == 0) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "title_cell", for: indexPath) as! ReviewCategoryCollectionViewCell
+            cell.applyFonts()
             cell.headerLabel.text = LocalizedString("TITEL", comment: "")
             cell.editAccessor.image = UIImage(named: "ic_edit", in: MM.shared.bundle, compatibleWith: nil)
             cell.editAccessor.tintColor = .lightGray
@@ -164,6 +166,7 @@ class ReviewViewModel: NSObject, UICollectionViewDataSource, UICollectionViewDel
             return cell
         } else if (((indexPath.row == 3 && showMap) || (indexPath.row == 2 && !showMap || (indexPath.row == 4 && ((viewsParentController.report?.reportType?.has_title ?? 0) == 1)))) && (viewsParentController.domain?.getAttributesAsDefaultFields() ?? 0) == 0) {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "title_cell", for: indexPath) as! ReviewCategoryCollectionViewCell
+            cell.applyFonts()
             cell.headerLabel.text = LocalizedString("DESCRIPTION", comment: "")
             cell.editAccessor.image = UIImage(named: "ic_edit", in: MM.shared.bundle, compatibleWith: nil)
             cell.editAccessor.tintColor = .lightGray
@@ -184,6 +187,7 @@ class ReviewViewModel: NSObject, UICollectionViewDataSource, UICollectionViewDel
             }
             let attribute = self.attributes[indexPath.row-offset]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "title_cell", for: indexPath) as! ReviewCategoryCollectionViewCell
+            cell.applyFonts()
             cell.headerLabel.text = attribute.name
             cell.editAccessor.image = nil
             if attribute.multiselect == 1 && attribute.answer != nil && attribute.answer! != "" {

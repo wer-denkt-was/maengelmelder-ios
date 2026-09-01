@@ -45,9 +45,11 @@ class ReviewViewController: UIViewController {
         
         self.sendNowButton.backgroundColor = MMColorScheme.shared.getColor(view: sendNowButton, type: .buttonBg)
         self.sendNowButton.setTitleColor(MMColorScheme.shared.getColor(view: sendNowButton, type: .buttonTitleText), for: .normal)
-        
+        self.sendNowButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
+
         self.sebdLaterButton.backgroundColor = MMColorScheme.shared.getColor(view: sebdLaterButton, type: .buttonBg)
         self.sebdLaterButton.setTitleColor(MMColorScheme.shared.getColor(view: sebdLaterButton, type: .buttonTitleText), for: .normal)
+        self.sebdLaterButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         
         if self.parent?.navigationItem.rightBarButtonItems?.count ?? 0 > 0 {
             self.parent?.navigationItem.rightBarButtonItems?.remove(at: 0)
@@ -69,6 +71,7 @@ class ReviewViewController: UIViewController {
             button.titleLabel?.transform = CGAffineTransform(scaleX: -1, y: 1)
             button.imageView?.transform = CGAffineTransform(scaleX: -1, y: -1)
             button.setTitleColor(MMColorScheme.shared.getColor(view: button, type: .titleText), for: .normal)
+            button.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
             parentTVC.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         }

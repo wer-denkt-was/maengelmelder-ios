@@ -1,3 +1,7 @@
+[1.8.4]
+- all module views now automatically use MMFontScheme (MMLabel, MMButton, MMTextField, MMTextView subclasses)
+- navigation bar title and bar button item fonts now follow MMFontScheme
+
 [1.8.3]
 - added support for custom fonts via MMSettings and MM.registerFont
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaddingLabel: UILabel {
+class PaddingLabel: MMLabel {
 
     override func draw(_ rect: CGRect) {
         let insets = UIEdgeInsets(top: 5, left: 10, bottom: 5 , right: 10)

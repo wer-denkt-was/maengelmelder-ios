@@ -37,19 +37,28 @@ class FilterViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.navigationItem.title = LocalizedString("FILTER_AFTER", comment: "")
         self.stateTitle.text = LocalizedString("STATE", comment: "")
+        self.stateTitle.font = MMFontScheme.shared.subTitleTextFont
         self.inProcessLabel.text = LocalizedString("IN_PROGRESS", comment: "")
+        self.inProcessLabel.font = MMFontScheme.shared.normalTextFont
         self.green2Label.text = LocalizedString("FINISHED_INCOMPLETE", comment: "")
+        self.green2Label.font = MMFontScheme.shared.normalTextFont
         self.redLabel.text = LocalizedString("INCOMPLETE", comment: "")
+        self.redLabel.font = MMFontScheme.shared.normalTextFont
         self.greenLabel.text = LocalizedString("FINISHED", comment: "")
+        self.greenLabel.font = MMFontScheme.shared.normalTextFont
         self.favLabel.text = LocalizedString("FAV_FILTER", comment: "")
+        self.favLabel.font = MMFontScheme.shared.normalTextFont
         self.blueLabel.text = "Weitergabe an Dritte"
+        self.blueLabel.font = MMFontScheme.shared.normalTextFont
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButton))
         
         self.searchTitle.placeholder = LocalizedString("SEARCH_TITLE_DESC", comment: "")
+        self.searchTitle.font = MMFontScheme.shared.normalTextFont
         self.searchTitle.textColor = self.view.isDarkMode() ? .white : .black
-        
+
         self.searchType.placeholder = LocalizedString("HEADING_STEP_3", comment: "")
+        self.searchType.font = MMFontScheme.shared.normalTextFont
         self.searchType.textColor = self.view.isDarkMode() ? .white : .black
         
         if !MMSettings.shared.showBlueStatus {

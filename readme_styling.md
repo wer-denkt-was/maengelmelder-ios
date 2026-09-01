@@ -47,4 +47,6 @@ MMSettings.shared.customFontBold    = "MyFont-Bold"
 
 The PostScript name of a font can be found in Font Book (Font Info panel) or with `fc-query MyFont.ttf` on macOS.
 
+Set font settings before calling `MM.shared.start()` so that all views pick them up on first load.
+
 Individual font slots can still be overridden directly via `MMFontScheme.shared` if needed.

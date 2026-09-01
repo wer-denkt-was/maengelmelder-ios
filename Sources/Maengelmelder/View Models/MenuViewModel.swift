@@ -181,6 +181,7 @@ class MenuViewModel: NSObject, UITableViewDataSource {
             (cell as! ProfileTableViewCell).logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         } else {
             cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .buttonTitleText)
+            cell.textLabel?.font = MMFontScheme.shared.normalTextFont
             cell.textLabel?.text = LocalizedString("LOGIN_BTN_TITLE", comment: "")
         }
         
@@ -195,8 +196,9 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.accessibilityTraits = .button
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        cell.textLabel?.text = LocalizedString("MY_MESSAGES_TITLE", comment: "")        
+        cell.textLabel?.text = LocalizedString("MY_MESSAGES_TITLE", comment: "")
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         return Row(cell: cell, vc: getVCForMyMessageList())
     }
             
@@ -207,6 +209,7 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.textLabel?.text = "Neue Meldung"
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         return Row(cell: cell, vc: getVCForNewMessage())
     }
     
@@ -217,6 +220,7 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.textLabel?.text = "Alle Meldungen"
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         return Row(cell: cell, vc: getVCForReportList())
     }
     
@@ -227,7 +231,8 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.textLabel?.text = "Offline-Daten verwalten"
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
-        
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
+
         let storyboard = UIStoryboard(name: "MMMain", bundle: MM.shared.bundle)
         let vc = storyboard.instantiateViewController(withIdentifier: "OfflineSettingsViewController") as! OfflineSettingsViewController
         return Row(cell: cell, vc: vc)
@@ -241,6 +246,7 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.tag = OFFLINE_CELL
         cell.textLabel?.text = "Offline-Modus \(InternetUtility.shared.getManualOfflineMode() ? "deaktivieren" : "aktivieren")"
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         return Row(cell: cell, vc: nil)
     }
     
@@ -251,6 +257,7 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.textLabel?.text = "Start"
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         return Row(cell: cell, vc: nil)
     }
     
@@ -261,8 +268,9 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.backgroundColor = .clear
         cell.textLabel?.text = LocalizedString(String.init(format: "%@_PAGE_TITEL", MMSettings.shared.menuInfoPages[position].rawValue), comment: "")
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         cell.accessibilityTraits = .button
-        
+
         // Show dialog with different options for "about us"
         let optionsAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         optionsAlert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: nil))
@@ -288,6 +296,7 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.textLabel?.text = "Tutorials beim Start neu starten"
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         
         let alert = UIAlertController(title: "Tutorials beim Start neu starten", message: "Wollen Sie die Tutorials beim Start der App neu starten?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ja", style: .default, handler: { (_) in
@@ -304,10 +313,11 @@ class MenuViewModel: NSObject, UITableViewDataSource {
         let cell = UITableViewCell()
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        cell.textLabel?.text = LocalizedString(String.init(format: "%@_PAGE_TITEL", MMSettings.shared.menuInfoPages[position].rawValue), comment: "") 
+        cell.textLabel?.text = LocalizedString(String.init(format: "%@_PAGE_TITEL", MMSettings.shared.menuInfoPages[position].rawValue), comment: "")
         cell.textLabel?.textColor = MMColorScheme.shared.getColor(view: cell, type: .normalText)
+        cell.textLabel?.font = MMFontScheme.shared.normalTextFont
         cell.accessibilityTraits = .button
-        
+
         let storyboard = UIStoryboard(name: "MMMain", bundle: MM.shared.bundle)
         let vcToPush = storyboard.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
         vcToPush.pageName = MMSettings.shared.menuInfoPages[position]

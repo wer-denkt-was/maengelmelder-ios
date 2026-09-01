@@ -106,6 +106,7 @@ public class ReportCreationTabViewController : UITabBarController {
         } else {
             button.setTitleColor(MMColorScheme.shared.getColor(view: button, type: .titleText), for: .normal)
         }
+        button.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
         
         if (screenMode! == GlobalFlagValues.REPORT_SCREEN_NEW_MODE && !inserted) {

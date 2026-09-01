@@ -179,6 +179,7 @@ class MyMessagesViewModel: NSObject, UITableViewDataSource {
             let report = isIdea ? notUploadedIdeas[indexPath.row] : notUploadedMaengel[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "reportCell", for: indexPath) as! MyMessagesTableViewCell
             cell.titleLabel.text = ((report.reportType?.has_title ?? 0) == 1) ? report.title : report.text
+            cell.titleLabel.font = MMFontScheme.shared.normalTextFont
             cell.markerView.image = UIImage(named: String(format:"marker-%@-%d.png", report.marker_color ?? "white", report.marker_id.intValue), in: MM.shared.bundle, compatibleWith: nil) ?? UIImage()
             
             let color = tableView.isDarkMode() ? MMColorScheme.shared.getColor(view: cell, type: .secondaryAppTheme) : MMColorScheme.shared.getColor(view: cell, type: .appTheme)
@@ -196,6 +197,9 @@ class MyMessagesViewModel: NSObject, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "uploadedReportCell", for: indexPath) as! ReportTableViewCell
             cell.idLabel.text = String.init(format: LocalizedString("MESSAGE_DETAIL_PAGE_TITLE", comment: ""), report.id.intValue)
             cell.titleLabel.text = report.text
+            cell.titleLabel.font = MMFontScheme.shared.normalTextFont
+            cell.subtitleLabel.font = MMFontScheme.shared.smallTextFont
+            cell.idLabel.font = MMFontScheme.shared.smallTextFont
             
             var name = report.typeName ?? ""
             if var index = name.firstIndex(of: ">") {

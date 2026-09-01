@@ -19,6 +19,7 @@ class ReportTypeTableViewCell: UITableViewCell {
     func setStyle () {
         reportTypeNameLabel.font = MMFontScheme.shared.subTitleTextFont
         reportTypeNameLabel.textColor = MMColorScheme.shared.getColor(view: reportTypeNameLabel, type: .tableViewCellText)
+        reportTypeDomainLabel.font = MMFontScheme.shared.smallTextFont
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

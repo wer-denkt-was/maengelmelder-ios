@@ -38,6 +38,9 @@ class DuplicatesViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let duplicate = self.duplicates[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "reportCell") as! ReportTableViewCell
+        cell.titleLabel.font = MMFontScheme.shared.normalTextFont
+        cell.subtitleLabel.font = MMFontScheme.shared.smallTextFont
+        cell.idLabel.font = MMFontScheme.shared.smallTextFont
         cell.idLabel.text = String.init(format: LocalizedString("MESSAGE_DETAIL_PAGE_TITLE", comment: ""), duplicate.messageid.intValue)
         cell.titleLabel.text = duplicate.text
         cell.subtitleLabel.text = duplicate.state

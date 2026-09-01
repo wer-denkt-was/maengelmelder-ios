@@ -46,10 +46,14 @@ class CommentViewController: UIViewController {
         commentLabel.text = LocalizedString("COMMENT_PLACEHOLDER", comment: "")
         commentLabel.font = MMFontScheme.shared.subTitleTextFont?.withSize(UIFont.preferredFont(forTextStyle: .callout).pointSize)
         oldImageLabel.text = LocalizedString("OLD_IMAGE_LABEL", comment: "")
+        oldImageLabel.font = MMFontScheme.shared.normalTextFont
         newImageLabel.text = LocalizedString("NEW_IMAGE_LABEL", comment: "")
+        newImageLabel.font = MMFontScheme.shared.normalTextFont
         reportFinishedLabel.text = LocalizedString("SWITCH_TEXT", comment: "")
+        reportFinishedLabel.font = MMFontScheme.shared.normalTextFont
         sendButton.setTitle(LocalizedString("SEND_COMMENT_BUTTON", comment: ""), for: .normal)
         commentTextField.text = LocalizedString("COMMENT_PLACEHOLDER", comment: "")
+        commentTextField.font = MMFontScheme.shared.normalTextFont
         commentTextField.textColor = .lightGray
         
         sendButton.backgroundColor = MMColorScheme.shared.getColor(view: self.view, type: .buttonBg)

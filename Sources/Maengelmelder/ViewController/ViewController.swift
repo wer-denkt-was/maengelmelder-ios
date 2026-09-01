@@ -294,6 +294,7 @@ class ViewController: UIViewController, MapManagerDelegate {
         for (name, _) in MMSettings.shared.localMapLayers {
             let label = UILabel()
             label.textColor = MMColorScheme.shared.getColor(view: label, type: .tableViewCellText)
+            label.font = MMFontScheme.shared.normalTextFont
             label.text = name
             label.tag = i
             
@@ -401,10 +402,12 @@ class ViewController: UIViewController, MapManagerDelegate {
         self.qrCodeButton.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .buttonTitleText)
         self.sammelCheckButton.setTitleColor(MMColorScheme.shared.getColor(view: self.view, type: .buttonTitleText), for: .normal)
         self.sammelCheckButton.setTitle("Sammelcheck", for: .normal)
+        self.sammelCheckButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         self.sammelCheckButton.addTarget(self, action: #selector(createNewSammelcheckReport), for: .touchUpInside)
         self.buttonBar.backgroundColor = MMColorScheme.shared.getColor(view: self.view, type: .barTint)
         self.createNewReportButton.setTitleColor(MMColorScheme.shared.getColor(view: self.view, type: .buttonTitleText), for: .normal)
         self.createNewReportButton.setTitle(LocalizedString("CREATE_REPORT_BTN_TITLE", comment: ""), for: .normal)
+        self.createNewReportButton.titleLabel?.font = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
         self.userLocationButton.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .buttonTitleText)
         self.reportsListButton.tintColor = MMColorScheme.shared.getColor(view: self.view, type: .buttonTitleText)
         

@@ -186,5 +186,6 @@ public class MMSettings {
                                                                  MMFontScheme.shared.subTitleTextFont  = f }
         if let f = UIFont(name: mediumName, size: bodySize)    { MMFontScheme.shared.buttonTitleFont   = f }
         if let f = UIFont(name: lightName,  size: footnoteSize){ MMFontScheme.shared.smallTextFont     = f }
+        MM.shared.applyNavBarFont()
     }
 }

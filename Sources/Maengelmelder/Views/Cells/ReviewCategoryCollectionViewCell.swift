@@ -9,9 +9,14 @@
 import UIKit
 
 class ReviewCategoryCollectionViewCell: UICollectionViewCell {
-    
+
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var markerImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var editAccessor: UIImageView!
+
+    func applyFonts() {
+        headerLabel.font = MMFontScheme.shared.smallTextFont
+        nameLabel.font = MMFontScheme.shared.normalTextFont
+    }
 }

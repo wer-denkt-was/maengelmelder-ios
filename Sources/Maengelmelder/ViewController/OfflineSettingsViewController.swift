@@ -40,7 +40,9 @@ extension OfflineSettingsViewController: UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "offline_cell", for: indexPath) as! OfflineMapTableViewCell
-        
+        cell.titleLabel.font = MMFontScheme.shared.normalTextFont
+        cell.subtitleLabel.font = MMFontScheme.shared.smallTextFont
+
         // Data sync is done automatically at the start
         if indexPath.section == 0 {
             cell.titleLabel.text = "Basisdaten"

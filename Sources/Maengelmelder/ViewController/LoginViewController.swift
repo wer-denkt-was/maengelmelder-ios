@@ -61,9 +61,13 @@ class LoginViewController: UIViewController {
             }
             
             self.nameTitleLabel.text = " " + LocalizedString("NAME_TITLE", comment: "")
+            self.nameTitleLabel.font = MMFontScheme.shared.subTitleTextFont
             self.emailTitleLabel.text = " " + LocalizedString("EMAIL_TITLE", comment: "")
+            self.emailTitleLabel.font = MMFontScheme.shared.subTitleTextFont
             self.nameLabel.text = "  " + (UserDefaults.standard.string(forKey: "user.publicName") ?? "")
+            self.nameLabel.font = MMFontScheme.shared.normalTextFont
             self.emailLabel.text = "  " + (UserDefaults.standard.string(forKey: "loginmail") ?? "")
+            self.emailLabel.font = MMFontScheme.shared.normalTextFont
             
             self.logoutButton.setTitleColor(MMColorScheme.shared.getColor(view: self.view, type: .buttonTitleText), for: .normal)
             self.logoutButton.backgroundColor = MMColorScheme.shared.getColor(view: self.view, type: .buttonBg)
@@ -83,7 +87,9 @@ class LoginViewController: UIViewController {
             self.forgotPassword.backgroundColor = MMColorScheme.shared.getColor(view: self.view, type: .buttonBg)
             
             self.mailLabel.text = LocalizedString("LOGIN_MAIL", comment: "")
+            self.mailLabel.font = MMFontScheme.shared.normalTextFont
             self.mailTextField.placeholder = LocalizedString("LOGIN_MAIL", comment: "")
+            self.mailTextField.font = MMFontScheme.shared.normalTextFont
             self.mailTextField.delegate = self
             
             if let mail = UserDefaults.standard.string(forKey: "loginmail") {
@@ -91,9 +97,12 @@ class LoginViewController: UIViewController {
             }
             
             self.passwordLabel.text = LocalizedString("LOGIN_PASS", comment: "")
+            self.passwordLabel.font = MMFontScheme.shared.normalTextFont
             self.passwordTextField.placeholder = LocalizedString("LOGIN_PASS", comment: "")
+            self.passwordTextField.font = MMFontScheme.shared.normalTextFont
             self.passwordTextField.delegate = self
             
+            self.warningLabel.font = MMFontScheme.shared.smallTextFont
             if isLoggedIn && self.selectedDomain != nil {
                 self.warningLabel.isHidden = false
                 self.warningLabel.text = String.init(format: "Sie sind aktuell an %@ angemeldet. Mit der neuen Anmeldung auf %@ werden Sie automatisch vom bisherigen System abgemeldet.", UserDefaults.standard.string(forKey: "user.domainName") ?? "", self.selectedDomain!.1)
