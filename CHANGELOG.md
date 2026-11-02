@@ -1,3 +1,7 @@
+[1.8.5]
+- external categories now support mailto: links (incl. subject/body parameters) and open the user's mail client
+- adapted hint text for external mailto: categories, show a fallback message if the link cannot be opened
+
 [1.8.4]
 - all module views now automatically use MMFontScheme (MMLabel, MMButton, MMTextField, MMTextView subclasses)
 - navigation bar title and bar button item fonts now follow MMFontScheme

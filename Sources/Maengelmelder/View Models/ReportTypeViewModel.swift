@@ -605,11 +605,13 @@ class ReportTypeViewModel : NSObject, UITableViewDataSource, UITableViewDelegate
         guard let type = type else {return}
         
         if let externalUri = type.externalUri {
-            let alert = UIAlertController(title: nil, message: String.init(format: "Meldungen für die Kategorie \"%@\" werden mit dieser App nicht entgegen genommen. Sie werden für das Thema auf eine externe Seite weitergeleitet. Möchten Sie fortfahren?", type.name ?? "", externalUri), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
-                if UIApplication.shared.canOpenURL(URL(string: externalUri)!) {
-                    UIApplication.shared.open(URL(string: externalUri)!, options: [:], completionHandler: nil)
-                }
+            let isMail = externalUri.trimmingCharacters(in: .whitespacesAndNewlines).lowercased().hasPrefix("mailto:")
+            let message = isMail
+                ? String(format: "Meldungen für die Kategorie \"%@\" werden mit dieser App nicht entgegen genommen. Für das Thema wird Ihr E-Mail-Programm geöffnet. Möchten Sie fortfahren?", type.name ?? "")
+                : String(format: "Meldungen für die Kategorie \"%@\" werden mit dieser App nicht entgegen genommen. Sie werden für das Thema auf eine externe Seite weitergeleitet. Möchten Sie fortfahren?", type.name ?? "")
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [weak self] _ in
+                self?.openExternalUri(externalUri, isMail: isMail)
             }))
             alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: nil))
             self.viewsParentController?.present(alert, animated: true, completion: nil)
@@ -630,6 +632,41 @@ class ReportTypeViewModel : NSObject, UITableViewDataSource, UITableViewDelegate
         }
     }
     
+    /// Opens the external uri of a category. Supports http(s) and mailto links (incl. parameters like subject/body).
+    /// canOpenURL is intentionally not used, as it returns false for schemes not listed in LSApplicationQueriesSchemes (e.g. mailto).
+    private func openExternalUri(_ externalUri: String, isMail: Bool) {
+        let trimmed = externalUri.trimmingCharacters(in: .whitespacesAndNewlines)
+        // enriched links (e.g. mailto:a@b.de?subject=Bäche melden) may contain characters which have to be encoded first
+        var allowed = CharacterSet.urlQueryAllowed
+        allowed.insert("#")
+        guard let url = URL(string: trimmed) ?? trimmed.addingPercentEncoding(withAllowedCharacters: allowed).flatMap({ URL(string: $0) }) else {
+            showExternalUriError(externalUri, isMail: isMail)
+            return
+        }
+        UIApplication.shared.open(url, options: [:]) { [weak self] success in
+            if !success {
+                self?.showExternalUriError(externalUri, isMail: isMail)
+            }
+        }
+    }
+
+    private func showExternalUriError(_ externalUri: String, isMail: Bool) {
+        let target: String
+        if isMail, let url = URLComponents(string: externalUri) ?? externalUri.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed).flatMap({ URLComponents(string: $0) }) {
+            target = url.path.removingPercentEncoding ?? url.path
+        } else {
+            target = externalUri
+        }
+        let message = isMail
+            ? String(format: "Es konnte kein E-Mail-Programm geöffnet werden. Bitte senden Sie Ihre Meldung an: %@", target)
+            : String(format: "Die Seite konnte nicht geöffnet werden: %@", target)
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        DispatchQueue.main.async {
+            self.viewsParentController?.present(alert, animated: true, completion: nil)
+        }
+    }
+
     func checkDuplicates(type: ReportTypeMO, jghud: JGProgressHUD? = nil) {
         //Do not check duplicates if the type needs no location or if we have shown type selection first
         guard type.position != "never", !MMSettings.shared.showTypesFirst else {
