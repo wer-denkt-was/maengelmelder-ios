@@ -48,7 +48,7 @@ class MMButton: UIButton {
         super.awakeFromNib()
         let size = titleLabel?.font.pointSize ?? 15
         let buttonFont = MMFontScheme.shared.buttonTitleFont ?? MMFontScheme.shared.normalTextFont
-        if #available(iOS 15, *), configuration != nil {
+        if configuration != nil {
             configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { attrs in
                 var a = attrs
                 a.font = buttonFont?.withSize(size)

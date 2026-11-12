@@ -91,11 +91,7 @@ extension UIView {
      Returns true, if the view is in dark mode. Otherwise returns false.
      */
     public func isDarkMode() -> Bool {
-        if #available(iOS 12.0, *) {
-            return self.traitCollection.userInterfaceStyle == .dark
-        } else {
-            return false
-        }
+        return self.traitCollection.userInterfaceStyle == .dark
     }
 }
 

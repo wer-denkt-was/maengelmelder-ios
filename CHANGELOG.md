@@ -1,3 +1,6 @@
+[1.9.0]
+- raised deployment target to iOS 15
+
 [1.8.6]
 - fix: a category forced by a link (force_typeid) is no longer removed when the position changes; the user was asked to select a category although the category tab was hidden
 
