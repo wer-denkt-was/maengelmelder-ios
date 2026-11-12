@@ -1,3 +1,6 @@
+[1.8.6]
+- fix: a category forced by a link (force_typeid) is no longer removed when the position changes; the user was asked to select a category although the category tab was hidden
+
 [1.8.5]
 - external categories now support mailto: links (incl. subject/body parameters) and open the user's mail client
 - adapted hint text for external mailto: categories, show a fallback message if the link cannot be opened

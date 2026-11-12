@@ -24,7 +24,10 @@ class ReportPositionViewModel {
         self.viewsParentController!.report!.lat = lat
         self.viewsParentController!.report!.long = long
         
-        if !MMSettings.shared.showTypesFirst {
+        // A category forced by a link (force_typeid) must survive position changes,
+        // because its tab is removed and the user could not select it again
+        let isTypeForced = self.viewsParentController?.externalData?.shouldForceTypeId() ?? false
+        if !MMSettings.shared.showTypesFirst && !isTypeForced {
             if let reportType = self.viewsParentController?.report?.reportType {
                 reportType.rt_description = "cloned"
                 self.viewsParentController?.report?.reportType = nil
