@@ -1,3 +1,7 @@
+[1.9.1]
+- fix: with a category forced by a link, the review showed "Mängelmelder.de" as upload target instead of the category's domain (e.g. sags-doch.de)
+- fix: a forced category was requested once before the system was known
+
 [1.9.0]
 - raised deployment target to iOS 15
 

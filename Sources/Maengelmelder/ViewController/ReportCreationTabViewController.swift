@@ -289,15 +289,22 @@ public class ReportCreationTabViewController : UITabBarController {
     
     private func fetchCategory(with id: Int, callback: @escaping (Bool?) -> Void) {
         if system == nil {
-            self.fetchSystems(report: report!) { system in
-                self.fetchCategory(with: id, callback: callback)
+            // Request the category only once the system is known (it may be an external one)
+            self.fetchSystems(report: report!) { _ in
+                self.fetchCategoryDetails(with: id, callback: callback)
             }
+            return
         }
-                
+        fetchCategoryDetails(with: id, callback: callback)
+    }
+    
+    private func fetchCategoryDetails(with id: Int, callback: @escaping (Bool?) -> Void) {
         MMApi.shared.getCategoryDetails(id: id, system: self.system) { category, error in
             MMCoreDataManager.saveContext(entityName: CoreDataEntityNames.REPORT_TYPE, moc: MM.shared.managedObjectContext)
             if let category = category {
                 self.report?.reportType = category
+                // Shown before the upload, otherwise it falls back to "Mängelmelder.de"
+                self.report?.domainName = category.domainTitle
                 callback(true)
                 return
             }
