@@ -19,6 +19,9 @@ class ReportAttributesViewModel : NSObject {
     
     var selectedAttribute : ReportAttributesDisplayableObject? = nil
     
+    // Called if the attributes of a forced category (force_typeid) could not be loaded
+    var onLoadingFailed : (() -> Void)?
+    
     init(parentController: ReportCreationTabViewController, reportAttributesDS: ReportAttributesTableViewDataSource) {
         super.init()
         self.viewsParentController = parentController
@@ -30,6 +33,15 @@ class ReportAttributesViewModel : NSObject {
         DispatchQueue.main.async {
             if self.viewsParentController?.report?.isOffline ?? 0 == 1 {
                 self.fetchReportTypeAttributes()
+            } else if self.viewsParentController?.externalData?.shouldForceTypeId() ?? false {
+                // Use the domain of the forced category, independent of the current position
+                self.viewsParentController?.waitForForcedDomain { success in
+                    if success, let domain = self.viewsParentController?.domain, let system = self.viewsParentController?.system {
+                        self.loadSettingsForDomain(with: domain.getID(), and: system)
+                    } else {
+                        self.onLoadingFailed?()
+                    }
+                }
             } else if self.viewsParentController?.domain != nil && self.viewsParentController?.system != nil {
                 self.loadSettingsForDomain(with: self.viewsParentController!.domain!.getID(), and: self.viewsParentController!.system!)
              } else {
@@ -79,6 +91,8 @@ class ReportAttributesViewModel : NSObject {
             if let settings = settingsO {
                 self.viewsParentController?.domain?.setSettings(settings)
                 self.fetchReportTypeAttributes()
+            } else if self.viewsParentController?.externalData?.shouldForceTypeId() ?? false {
+                self.onLoadingFailed?()
             }
         }
     }

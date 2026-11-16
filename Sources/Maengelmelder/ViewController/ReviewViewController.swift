@@ -105,9 +105,15 @@ class ReviewViewController: UIViewController {
                 if alertMsg.isEmpty {
                     alertMsg = LocalizedString(MMSettings.shared.showTypesFirst ? "TYPE_FIRST_CATEGORY_NOT_AVAILABLE" : "CATEGORY_NOT_AVAILABLE", comment: "")
                 }
+                let parentTVC = self.parent as? ReportCreationTabViewController
+                let isTypeForced = parentTVC?.externalData?.shouldForceTypeId() ?? false
+                if isTypeForced {
+                    alertMsg = parentTVC?.forcedCategoryPositionMessage() ?? alertMsg
+                }
                 let alert = UIAlertController(title: nil, message: alertMsg, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: LocalizedString("OK", comment: ""), style: .default, handler: { _ in
-                    (self.parent as? ReportCreationTabViewController)?.goToTab(2)
+                    // The category tab is removed for a forced category, go back to the position instead
+                    parentTVC?.goToTab(isTypeForced ? (parentTVC?.indexOfPositionTab ?? 0) : 2)
                 }))
                 self.present(alert, animated: true, completion: nil)
             } else {

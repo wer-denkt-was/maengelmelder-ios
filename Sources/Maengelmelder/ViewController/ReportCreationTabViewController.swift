@@ -42,6 +42,10 @@ public class ReportCreationTabViewController : UITabBarController {
     var showErrorsInAttributes = false
     var externalData : ExtrernalCreationData?
     
+    // Domain of a category forced by a link (force_typeid), loaded at the link position
+    private var isLoadingForcedDomain = false
+    private var forcedDomainCallbacks : [(Bool) -> Void] = []
+    
     private func searchForDomain(id: Int) {
         let lat = self.report?.lat.doubleValue ?? 0
         let lon = self.report?.long.doubleValue ?? 0
@@ -143,9 +147,15 @@ public class ReportCreationTabViewController : UITabBarController {
         }
         
         if let typeId = self.externalData?.getTypeId() {
+            if self.externalData?.shouldForceTypeId() ?? false {
+                self.isLoadingForcedDomain = true
+            }
             self.fetchCategory(with: typeId) { success in
                 if (success ?? false) && (self.externalData?.shouldForceTypeId() ?? false) && self.indexOfCategoryTab >= 0 {
                     self.viewControllers?.remove(at: self.indexOfCategoryTab)
+                    if self.indexOfPositionTab > self.indexOfCategoryTab {
+                        self.indexOfPositionTab -= 1
+                    }
                     self.indexOfCategoryTab = -1
                 }
             }
@@ -195,9 +205,16 @@ public class ReportCreationTabViewController : UITabBarController {
                         if alertMsg == "" {
                             alertMsg = LocalizedString(MMSettings.shared.showTypesFirst ? "TYPE_FIRST_CATEGORY_NOT_AVAILABLE" : "CATEGORY_NOT_AVAILABLE", comment: "")
                         }
+                        let isTypeForced = self.externalData?.shouldForceTypeId() ?? false
+                        if isTypeForced {
+                            alertMsg = self.forcedCategoryPositionMessage()
+                        }
                         let alert = UIAlertController(title: nil, message: alertMsg, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: LocalizedString("OK", comment: ""), style: .default, handler: { _ in
-                            (self.parent as? ReportCreationTabViewController)?.goToTab(2)
+                            // The category tab is removed for a forced category, stay on the position tab
+                            if !isTypeForced {
+                                (self.parent as? ReportCreationTabViewController)?.goToTab(2)
+                            }
                         }))
                         self.present(alert, animated: true, completion: nil)
                     } else {
@@ -244,12 +261,16 @@ public class ReportCreationTabViewController : UITabBarController {
      */	
     func checkCategoryAtPosition(callback: @escaping (Bool) -> Void) {
         
-        if (externalData != nil && externalData!.shouldForceTypeId())
-            || MMSettings.shared.showTypesFirst
+        if MMSettings.shared.showTypesFirst
             || MMSettings.shared.disableCategoryCheckOnPosition
             || report?.reportType?.position == "never"
         {
             callback(true)
+            return
+        }
+        
+        if externalData != nil && externalData!.shouldForceTypeId() {
+            self.checkForcedCategoryAtPosition(callback: callback)
             return
         }
         
@@ -287,6 +308,84 @@ public class ReportCreationTabViewController : UITabBarController {
         }
     }
     
+    /**
+     Checks if the position is inside the domain of the category forced by a link (force_typeid).
+     Uses the system of the category, not the one at the current position.
+     */
+    private func checkForcedCategoryAtPosition(callback: @escaping (Bool) -> Void) {
+        // Position cannot be changed (force_loc) or cannot be checked offline
+        if (externalData?.shouldForceLocation() ?? false) || !InternetUtility.shared.isOnline() {
+            callback(true)
+            return
+        }
+        
+        let lat = self.report?.lat.doubleValue ?? 0
+        let lon = self.report?.long.doubleValue ?? 0
+        
+        MMApi.shared.getDomain(lat: lat, lon: lon, system: self.system) { domainO, error in
+            MMCoreDataManager.saveContext(entityName: CoreDataEntityNames.REPORT_TYPE, moc: MM.shared.managedObjectContext)
+            if let domain = domainO, domain.getID() == self.report?.reportType?.domainID?.intValue {
+                callback(true)
+                return
+            }
+            callback(false)
+        }
+    }
+    
+    func forcedCategoryPositionMessage() -> String {
+        let domainTitle = report?.reportType?.domainTitle ?? report?.domainName ?? ""
+        return String(format: "Diese Kategorie ist nur im Gebiet %@ verfügbar. Bitte wählen Sie eine Position innerhalb dieses Gebiets.", domainTitle)
+    }
+    
+    /**
+     Calls back once the domain of the forced category is known (true) or could not be loaded (false).
+     Loads it again if a previous attempt failed.
+     */
+    func waitForForcedDomain(_ callback: @escaping (Bool) -> Void) {
+        if hasForcedDomain() {
+            callback(true)
+            return
+        }
+        forcedDomainCallbacks.append(callback)
+        if !isLoadingForcedDomain {
+            if let category = report?.reportType {
+                isLoadingForcedDomain = true
+                fetchForcedDomain(for: category)
+            } else {
+                finishLoadingForcedDomain()
+            }
+        }
+    }
+    
+    private func hasForcedDomain() -> Bool {
+        guard let domain = self.domain, self.system != nil else { return false }
+        return domain.getID() == report?.reportType?.domainID?.intValue
+    }
+    
+    private func fetchForcedDomain(for category: ReportTypeMO) {
+        let lat = self.report?.lat.doubleValue ?? 0
+        let lon = self.report?.long.doubleValue ?? 0
+        
+        MMApi.shared.getDomain(lat: lat, lon: lon, system: self.system) { domainO, error in
+            MMCoreDataManager.saveContext(entityName: CoreDataEntityNames.REPORT_TYPE, moc: MM.shared.managedObjectContext)
+            if let domain = domainO, domain.getID() == category.domainID?.intValue {
+                self.domain = domain
+                self.report?.domainid = domain.getID() as NSNumber
+            }
+            self.finishLoadingForcedDomain()
+        }
+    }
+    
+    private func finishLoadingForcedDomain() {
+        DispatchQueue.main.async {
+            self.isLoadingForcedDomain = false
+            let success = self.hasForcedDomain()
+            let callbacks = self.forcedDomainCallbacks
+            self.forcedDomainCallbacks = []
+            callbacks.forEach { $0(success) }
+        }
+    }
+    
     private func fetchCategory(with id: Int, callback: @escaping (Bool?) -> Void) {
         if system == nil {
             // Request the category only once the system is known (it may be an external one)
@@ -305,8 +404,17 @@ public class ReportCreationTabViewController : UITabBarController {
                 self.report?.reportType = category
                 // Shown before the upload, otherwise it falls back to "Mängelmelder.de"
                 self.report?.domainName = category.domainTitle
+                if self.externalData?.shouldForceTypeId() ?? false {
+                    self.report?.marker_id = category.marker_id ?? 0
+                    category.rt_description = "cloned_in_report"
+                    // The category tab is removed, so the domain has to be loaded here (at the link position)
+                    self.fetchForcedDomain(for: category)
+                }
                 callback(true)
                 return
+            }
+            if self.externalData?.shouldForceTypeId() ?? false {
+                self.finishLoadingForcedDomain()
             }
             callback(false)
             return
@@ -324,6 +432,25 @@ public class ReportCreationTabViewController : UITabBarController {
     }
     
     func uploadReport(sender: UIViewController){
+        // The tab bar allows to skip the position check, so check the position of a forced category again
+        if externalData?.shouldForceTypeId() ?? false {
+            checkCategoryAtPosition { success in
+                if success {
+                    self.startUpload(sender: sender)
+                } else {
+                    let alert = UIAlertController(title: nil, message: self.forcedCategoryPositionMessage(), preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: LocalizedString("OK", comment: ""), style: .default, handler: { _ in
+                        self.goToTab(self.indexOfPositionTab)
+                    }))
+                    sender.present(alert, animated: true, completion: nil)
+                }
+            }
+            return
+        }
+        startUpload(sender: sender)
+    }
+    
+    private func startUpload(sender: UIViewController) {
         if domain?.hasTextLimit() ?? false && report?.desc?.count ?? 0 > domain?.getTextLimit() ?? -1 {
             let alert = UIAlertController(title: nil, message: domain?.getTextLimitWarning(), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))

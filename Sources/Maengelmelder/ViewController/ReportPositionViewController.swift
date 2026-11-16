@@ -168,7 +168,10 @@ class ReportPositionViewController: UIViewController {
         
         if InternetUtility.shared.isOnline() && checkCategory {
             
-            if MMSettings.shared.checkIfAnyCategoryExistsOnPosition {
+            // A category forced by a link (force_typeid) is only valid inside its domain
+            let isTypeForced = self.parentTabController?.externalData?.shouldForceTypeId() ?? false
+            
+            if MMSettings.shared.checkIfAnyCategoryExistsOnPosition || isTypeForced {
                 
                 let controller = parent as? ReportCreationTabViewController
                 
@@ -184,9 +187,12 @@ class ReportPositionViewController: UIViewController {
                         if alertMsg == "" {
                             alertMsg = LocalizedString(MMSettings.shared.showTypesFirst ? "TYPE_FIRST_CATEGORY_NOT_AVAILABLE" : "CATEGORY_NOT_AVAILABLE", comment: "")
                         }
+                        if isTypeForced {
+                            alertMsg = controller?.forcedCategoryPositionMessage() ?? alertMsg
+                        }
                         let alert = UIAlertController(title: nil, message: alertMsg, preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: LocalizedString("OK", comment: ""), style: .default, handler: { _ in
-                            if (!MMSettings.shared.checkIfAnyCategoryExistsOnPosition) {
+                            if (!MMSettings.shared.checkIfAnyCategoryExistsOnPosition && !isTypeForced) {
                                 (self.parent as? ReportCreationTabViewController)?.goToTab(2)
                             }
                         }))
@@ -196,7 +202,8 @@ class ReportPositionViewController: UIViewController {
                         self.viewModel?.checkDuplicates()
                     } else if nextStep {
                         onFinished?(true)
-                        self.parentTabController?.goToNextTab()
+                        // Already checked for a forced category
+                        self.parentTabController?.goToNextTab(shouldCheck: !isTypeForced)
                     }
                 })
             } else {

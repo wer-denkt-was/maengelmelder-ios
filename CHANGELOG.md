@@ -1,3 +1,8 @@
+[1.9.2]
+- fix: with a category forced by a link, the description step stayed empty after moving the position outside the category's domain
+- a category forced by a link is now only accepted at positions inside its domain (checked on continue, position confirmation and upload)
+- show a hint instead of an empty page if the fields of a forced category cannot be loaded
+
 [1.9.1]
 - fix: with a category forced by a link, the review showed "Mängelmelder.de" as upload target instead of the category's domain (e.g. sags-doch.de)
 - fix: a forced category was requested once before the system was known

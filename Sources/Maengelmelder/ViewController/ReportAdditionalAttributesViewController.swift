@@ -63,6 +63,15 @@ class ReportAdditionalAttributesViewController : UIViewController {
             self.loadingSPinner?.dismiss()
         })
         
+        viewModel?.onLoadingFailed = { [weak self] in
+            guard let self = self else { return }
+            self.loadingSPinner?.dismiss()
+            guard self.viewIfLoaded?.window != nil, self.presentedViewController == nil else { return }
+            let alert = UIAlertController(title: nil, message: "Die Eingabefelder für diese Kategorie konnten nicht geladen werden. Bitte prüfen Sie Ihre Internetverbindung und öffnen Sie diesen Schritt erneut.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: LocalizedString("OK", comment: ""), style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
         attributesTableView.keyboardDismissMode = .interactive
         attributesTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         
@@ -93,8 +102,9 @@ class ReportAdditionalAttributesViewController : UIViewController {
             alert.addAction(UIAlertAction(title: LocalizedString("OK", comment: ""), style: UIAlertAction.Style.default, handler: { action in
                 if self.parentTabController?.screenMode == GlobalFlagValues.REPORT_SCREEN_NEW_IDEA || self.parentTabController?.screenMode == GlobalFlagValues.REPORT_SCREEN_EDIT_IDEA {
                     self.parentTabController!.selectedIndex = 0
-                } else {
-                    self.parentTabController!.selectedIndex = 2
+                } else if let parentTabController = self.parentTabController {
+                    // The category tab is removed for a category forced by a link
+                    parentTabController.goToTab(parentTabController.indexOfCategoryTab >= 0 ? parentTabController.indexOfCategoryTab : parentTabController.indexOfPositionTab)
                 }
                 }))
             self.present(alert, animated: true, completion: nil)
