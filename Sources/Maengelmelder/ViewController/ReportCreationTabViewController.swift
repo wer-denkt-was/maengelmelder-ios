@@ -208,7 +208,12 @@ public class ReportCreationTabViewController : UITabBarController {
         if selectedIndex == self.indexOfPositionTab {
             
             if shouldCheck {
+                let loadingHud = JGProgressHUD(style: .dark)
+                loadingHud.textLabel.text = "Position wird geprüft..."
+                loadingHud.show(in: self.view)
+                
                 self.checkCategoryAtPosition { success in
+                    loadingHud.dismiss()
                     if !success {
                         var alertMsg = MMSettings.shared.messageInvalidPositionText
                         if alertMsg == "" {
@@ -331,13 +336,23 @@ public class ReportCreationTabViewController : UITabBarController {
         let lat = self.report?.lat.doubleValue ?? 0
         let lon = self.report?.long.doubleValue ?? 0
         
-        MMApi.shared.getDomain(lat: lat, lon: lon, system: self.system) { domainO, error in
-            MMCoreDataManager.saveContext(entityName: CoreDataEntityNames.REPORT_TYPE, moc: MM.shared.managedObjectContext)
-            if let domain = domainO, domain.getID() == self.report?.reportType?.domainID?.intValue {
-                callback(true)
+        // An external system may return its domain for any position, so the system of the category
+        // has to be available at the position as well
+        MMApi.shared.getSystems(lat: lat, lon: lon) { systems, error in
+            guard let categorySystem = self.system,
+                  let systemAtPosition = systems?.first(where: { $0.host == categorySystem.host && $0.appid == categorySystem.appid }) else {
+                callback(false)
                 return
             }
-            callback(false)
+            
+            MMApi.shared.getDomain(lat: lat, lon: lon, system: systemAtPosition) { domainO, error in
+                MMCoreDataManager.saveContext(entityName: CoreDataEntityNames.REPORT_TYPE, moc: MM.shared.managedObjectContext)
+                if let domain = domainO, domain.getID() == self.report?.reportType?.domainID?.intValue {
+                    callback(true)
+                    return
+                }
+                callback(false)
+            }
         }
     }
     

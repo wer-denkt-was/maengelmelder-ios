@@ -1,3 +1,7 @@
+[1.9.4]
+- fix: the position of a category forced by a link was accepted outside its domain, now the category's system has to be available at the position
+- show a loading indicator while the position is checked on "Weiter"
+
 [1.9.3]
 - fix: the "Weiter" button did not check the position of a category forced by a link
 - fix: view controllers opened from the menu were shown inside the menu instead of the main navigation
