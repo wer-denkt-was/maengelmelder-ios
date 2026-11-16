@@ -22,6 +22,10 @@ class MenuViewController: UIViewController, UITableViewDelegate {
     
     public var params: (Int, Double, Double)?
     
+    // Navigation controller of the main view. SideMenu only pushes onto it if the menu's presentingViewController
+    // is a navigation controller, otherwise the view controller is pushed inside the menu.
+    weak var mainNavigationController: UINavigationController?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -56,6 +60,18 @@ class MenuViewController: UIViewController, UITableViewDelegate {
         self.headerImageVeiw.image = image
     }
     
+    /**
+     Closes the menu and shows the view controller in the main navigation instead of inside the menu.
+     */
+    func showInMainNavigation(_ viewController: UIViewController) {
+        guard let mainNavigationController = self.mainNavigationController, mainNavigationController !== self.navigationController else {
+            self.navigationController?.pushViewController(viewController, animated: true)
+            return
+        }
+        self.dismiss(animated: true, completion: nil)
+        mainNavigationController.pushViewController(viewController, animated: true)
+    }
+    
     public func setParams(domainid: Int, latitude: Double, longitude: Double) {
         self.viewModel?.params = (domainid, latitude, longitude)
     }
@@ -65,7 +81,7 @@ class MenuViewController: UIViewController, UITableViewDelegate {
             if vcToPush is UIAlertController {
                 self.present(vcToPush, animated: true, completion: nil)
             } else {
-                self.navigationController?.pushViewController(vcToPush, animated: true)
+                self.showInMainNavigation(vcToPush)
             }
         } else {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: self.viewModel?.selectRowNotfication(indexPath: indexPath) ?? ""), object: nil)

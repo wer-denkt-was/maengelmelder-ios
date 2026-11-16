@@ -281,7 +281,11 @@ class MenuViewModel: NSObject, UITableViewDataSource {
             optionsAlert.addAction(UIAlertAction(title: aboutUsInfo.title ?? title, style: .default, handler: { _ in
                 let vc = storyboard.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
                 vc.overrideInfoPage = aboutUsInfo
-                self.parentViewController?.navigationController?.pushViewController(vc, animated: true)
+                if let menuViewController = self.parentViewController as? MenuViewController {
+                    menuViewController.showInMainNavigation(vc)
+                } else {
+                    self.parentViewController?.navigationController?.pushViewController(vc, animated: true)
+                }
             }))
         }
         

@@ -66,7 +66,7 @@ class ReviewViewController: UIViewController {
             let button = UIButton(type: .custom)
             button.setImage(UIImage(named: "next", in: MM.shared.bundle, compatibleWith: nil), for: .normal)
             button.setTitle(LocalizedString("CONTINUE", comment: ""), for: .normal)
-            button.addTarget(parentTVC, action: #selector(parentTVC.goToNextTab), for: .touchUpInside)
+            button.addTarget(parentTVC, action: #selector(parentTVC.continueButtonTapped), for: .touchUpInside)
             button.transform = CGAffineTransform(scaleX: -1, y: 1)
             button.titleLabel?.transform = CGAffineTransform(scaleX: -1, y: 1)
             button.imageView?.transform = CGAffineTransform(scaleX: -1, y: -1)

@@ -784,6 +784,7 @@ class ViewController: UIViewController, MapManagerDelegate {
             destination?.menuWidth = self.view.bounds.width * 0.8
             
             let menuViewCtrl = destination?.viewControllers.first as? MenuViewController
+            menuViewCtrl?.mainNavigationController = self.navigationController
             menuViewCtrl?.setParams(domainid: self.currentDomainID,
                                     latitude: self.currentLat,
                                     longitude: self.currentLon)

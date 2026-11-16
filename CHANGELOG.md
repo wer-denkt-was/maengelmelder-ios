@@ -1,3 +1,7 @@
+[1.9.3]
+- fix: the "Weiter" button did not check the position of a category forced by a link
+- fix: view controllers opened from the menu were shown inside the menu instead of the main navigation
+
 [1.9.2]
 - fix: with a category forced by a link, the description step stayed empty after moving the position outside the category's domain
 - a category forced by a link is now only accepted at positions inside its domain (checked on continue, position confirmation and upload)

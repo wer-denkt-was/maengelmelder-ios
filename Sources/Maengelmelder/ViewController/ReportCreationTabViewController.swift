@@ -100,7 +100,7 @@ public class ReportCreationTabViewController : UITabBarController {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "next", in: MM.shared.bundle, compatibleWith: nil), for: .normal)
         button.setTitle(LocalizedString("CONTINUE", comment: ""), for: .normal)
-        button.addTarget(self, action: #selector(goToNextTab), for: .touchUpInside)
+        button.addTarget(self, action: #selector(continueButtonTapped), for: .touchUpInside)
         button.transform = CGAffineTransform(scaleX: -1, y: 1)
         button.titleLabel?.transform = CGAffineTransform(scaleX: -1, y: 1)
         button.imageView?.transform = CGAffineTransform(scaleX: -1, y: -1)
@@ -193,6 +193,15 @@ public class ReportCreationTabViewController : UITabBarController {
             }
         })
         self.present(alertSaving, animated: true)
+    }
+    
+    /**
+     Action of the "Weiter" button. A target action passes the sender, not a Bool, so goToNextTab(shouldCheck:)
+     must not be used as selector directly (shouldCheck was always false). The position is only checked for a
+     category forced by a link (force_typeid), as before for all other reports.
+     */
+    @objc func continueButtonTapped() {
+        goToNextTab(shouldCheck: externalData?.shouldForceTypeId() ?? false)
     }
     
     @objc func goToNextTab(shouldCheck: Bool = true) {
